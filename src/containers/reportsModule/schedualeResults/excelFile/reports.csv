@@ -1,0 +1,11 @@
+reportTitle,reportType,message,runDateTime,virtualDomain
+DUX- Last year Co2 emmison,Custom Report,Processing,2023-04-13,Root-Domain
+power Utilisation of Device X,Scheduled Report,Success,2023-06-15,Root-Domain
+power Utilisation of Device Y,Custom Report,Processing,2023-02-01,Root-Domain
+pue quarter Report,Scheduled Report,Success,2023-10-02,Root-Domain
+Dux rack wise Pue,Custom Report,Processing,2023-08-25,Root-Domain
+SUlay quarterly data transfer,Scheduled Report,Success,2023-10-27,Root-Domain
+DUX PUE  report,Custom Report,Processing,2023-02-02,Root-Domain
+DUX PUE  report,Scheduled Report,Success,2023-09-14,Root-Domain
+DUX PUE  report,Custom Report,Processing,2023-05-09,Root-Domain
+DUX PUE  report,Scheduled Report,Success,2024-02-08,Root-Domain

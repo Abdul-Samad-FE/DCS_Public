@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  dcs_frontend_dev:
+    container_name: DCS_test_container_frontend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3020:3000"  # Map React's development server to port 3018
+    volumes:
+      - /home/aziz/Test_Deployment_DCD/DCS_Frontend:/frontend-app
+      - node_modules_dev:/frontend-app/node_modules  # Use named volume fornode_modules
+    stdin_open: true
+    tty: true
+
+volumes:
+  node_modules_dev:  # Declare named volume for node_modules
