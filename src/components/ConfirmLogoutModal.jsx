@@ -49,12 +49,18 @@ const StyledModal = styled(Modal)`
   }
 `;
 
-const ConfirmLogoutModal = ({ isOpen, onCancel, onLogout }) => {
+const ConfirmLogoutModal = ({
+  isOpen,
+  onCancel,
+  onLogout,
+  content,
+  isDelete = false,
+}) => {
   const theme = useTheme();
   return (
     <StyledModal
       theme={theme}
-      title="Are you sure you want to log-out?"
+      title={content ? content.title : 'Are you sure you want to log-out?'}
       open={isOpen}
       onCancel={onCancel}
       footer={[
@@ -71,13 +77,14 @@ const ConfirmLogoutModal = ({ isOpen, onCancel, onLogout }) => {
           No
         </Button>,
         <Button key="logout" type="primary" danger onClick={onLogout}>
-          Logout
+          {isDelete ? 'Delete' : 'Logout'}
         </Button>,
       ]}
     >
       <span style={{ color: 'gray' }}>
-        Logging out will end your current session. Are you sure you want to
-        proceed?
+        {isDelete
+          ? content.text
+          : ' Logging out will end your current session. Are you sure you want to proceed'}
       </span>
     </StyledModal>
   );

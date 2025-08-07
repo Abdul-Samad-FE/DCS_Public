@@ -25,6 +25,7 @@ import {
   fetchPasswordGroup,
 } from '../../../store/features/dashboardModule/actions/passwordGroupAction.js';
 import { useDispatch, useSelector } from 'react-redux';
+import ConfirmLogoutModal from '../../../components/ConfirmLogoutModal.jsx';
 
 const StyledForm = styled(Form)`
   margin: 20px !important;
@@ -54,6 +55,7 @@ const PasswordGroup = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const [isEdit, setIsEdit] = useState(false);
   const [currentRecord, setCurrentRecord] = useState(null); // for edit
+  const [deleteId, setDeleteId] = useState(null);
 
   const [form] = Form.useForm(); // Initialize the form instance
 
@@ -116,29 +118,39 @@ const PasswordGroup = () => {
     setFilteredData(extra.currentDataSource);
   };
 
-  const showConfirm = async (id) => {
-    confirm({
-      title: (
-        <span style={{ color: 'gray' }}>Are you sure you want to delete?</span>
-      ),
-      icon: <ExclamationCircleFilled />,
-      content: (
-        <span style={{ color: 'gray' }}>
-          Once you delete it will permanatly remove from the database. Are you
-          sure you want to proceed?
-        </span>
-      ),
-      okText: 'Yes',
-      okType: 'primary',
-      okButtonProps: {
-        // disabled: true,
-      },
-      cancelText: 'No',
-      onOk() {
-        handleDelete(id);
-      },
-      onCancel() {},
-    });
+  // const showConfirm = async (id) => {
+  //   confirm({
+  //     title: (
+  //       <span style={{ color: 'gray' }}>Are you sure you want to delete?</span>
+  //     ),
+  //     icon: <ExclamationCircleFilled />,
+  //     content: (
+  //       <span style={{ color: 'gray' }}>
+  //         Once you delete it will permanatly remove from the database. Are you
+  //         sure you want to proceed?
+  //       </span>
+  //     ),
+  //     okText: 'Yes',
+  //     okType: 'primary',
+  //     okButtonProps: {
+  //       // disabled: true,
+  //     },
+  //     cancelText: 'No',
+  //     onOk() {
+  //       handleDelete(id);
+  //     },
+  //     onCancel() {},
+  //   });
+  // };
+
+  //Delete modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const showConfirmModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  const handleLogout = () => {
+    setIsModalOpen(false);
+    handleDelete(deleteId);
   };
 
   const columns = [
@@ -192,7 +204,10 @@ const PasswordGroup = () => {
           icon="bx:edit"
         />
         <Icon
-          onClick={() => showConfirm(record.id)}
+          onClick={() => {
+            setDeleteId(record?.id);
+            setIsModalOpen(true);
+          }}
           fontSize={'14px'}
           icon="uiw:delete"
         />
@@ -286,6 +301,16 @@ const PasswordGroup = () => {
   return (
     <>
       {contextHolder}
+      <ConfirmLogoutModal
+        isOpen={isModalOpen}
+        onCancel={closeModal}
+        onLogout={handleLogout}
+        content={{
+          title: 'Are you sure want to Delete Password Group',
+          text: 'Once you delete it will permanatly remove from the database. Are you sure you want to proceed?',
+        }}
+        isDelete
+      />
       <CustomModal
         open={open}
         title="Add Password Group"
