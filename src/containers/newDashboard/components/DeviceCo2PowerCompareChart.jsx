@@ -1,210 +1,3 @@
-// import React from 'react';
-// import ReactECharts from 'echarts-for-react';
-// import * as echarts from 'echarts';
-// import { useTheme } from '@mui/material/styles';
-// import { Col, Row } from 'antd';
-// import CustomSpin from '../../../components/CustomSpin';
-// import CustomCard from '../../../components/customCard';
-
-// const DeviceCo2PowerCompareChart = ({ onClick, loading }) => {
-//   const theme = useTheme();
-
-//   const chartData = Array.from({ length: 24 }, (_, i) => {
-//     const hour = i.toString().padStart(2, '0') + ':00';
-//     return {
-//       time: hour,
-//       carbon_emission: +(Math.random() * 20).toFixed(2), // Random KG
-//       pcr: +(Math.random() * 5).toFixed(2), // Random W/Gbps
-//     };
-//   });
-
-//   const option = {
-//     grid: {
-//       top: '5%',
-//       left: '3%',
-//       right: '4%',
-//       bottom: '10%',
-//       containLabel: true,
-//     },
-
-//     tooltip: {
-//       trigger: 'axis',
-//       axisPointer: { type: 'shadow' },
-//       backgroundColor: theme?.palette?.graph?.toolTip_bg,
-//       borderColor: theme?.palette?.graph?.tooltip_border,
-//       textStyle: {
-//         color: theme?.palette?.main_layout?.primary_text,
-//         fontSize: 14,
-//         fontFamily: 'inter',
-//         fontWeight: 'bold',
-//         lineHeight: 1.5,
-//       },
-//       formatter: (params) =>
-//         params
-//           .map(
-//             (p) =>
-//               `<div>${p.seriesName}: <span style="color:${theme?.palette?.main_layout?.secondary_text}">${p.value} ${
-//                 p.seriesName === 'CO₂ Emission' ? 'KG' : 'W/Gbps'
-//               }</span></div>`
-//           )
-//           .join(''),
-//     },
-//     legend: {
-//       show: true,
-//       top: 'top',
-//       right: 10,
-//       itemWidth: 0, // hide default icon
-//       itemHeight: 0,
-//       textStyle: {
-//         rich: {
-//           btn: {
-//             backgroundColor: '#e0e0e0', // your button color
-//             borderColor: '#999',
-//             borderWidth: 1,
-//             borderRadius: 6,
-//             padding: [4, 10],
-//             color: '#000',
-//             fontWeight: 500,
-//           },
-//         },
-//         fontSize: 14,
-//       },
-//       formatter: function (name) {
-//         return `{btn|${name}}`;
-//       },
-//     },
-//     xAxis: {
-//       type: 'category',
-//       data: chartData.map((d) => d.time),
-//       boundaryGap: true,
-//       axisLabel: {
-//         interval: 0,
-//         rotate: 0,
-//         // color: theme?.palette?.graph?.xis,
-//         color: '#979797',
-//       },
-//     },
-//     yAxis: {
-//       type: 'value',
-//       splitLine: {
-//         show: true,
-//         lineStyle: {
-//           type: 'dashed',
-//           color: '#979797',
-//         },
-//       },
-//       axisLabel: {
-//         color: '#979797',
-//         fontSize: 13,
-//       },
-//     },
-//     dataZoom:
-//       chartData.length > 15
-//         ? [
-//             {
-//               type: 'slider',
-//               show: true,
-//               xAxisIndex: 0,
-//               height: 1,
-//               bottom: 30,
-//               start: 0,
-//               end: (15 / chartData.length) * 100,
-//               backgroundColor: theme?.palette?.graph?.slider?.backgroundColor,
-//               fillerColor: theme?.palette?.graph?.slider?.fillerColor,
-//               handleStyle: {
-//                 color: theme?.palette?.graph?.slider?.handleColor,
-//                 borderColor: theme?.palette?.graph?.slider?.handleColor,
-//               },
-//               emphasis: {
-//                 fillerColor: theme?.palette?.graph?.slider?.hoverFillerColor,
-//                 handleStyle: {
-//                   color: theme?.palette?.graph?.slider?.handleHoverColor,
-//                   borderColor: theme?.palette?.graph?.slider?.handleHoverColor,
-//                 },
-//                 moveHandleStyle: {
-//                   color: theme?.palette?.graph?.slider?.handleHoverColor,
-//                   borderColor: theme?.palette?.graph?.slider?.handleHoverColor,
-//                 },
-//               },
-//             },
-//             {
-//               type: 'inside',
-//               xAxisIndex: 0,
-//               zoomOnMouseWheel: false,
-//               moveOnMouseWheel: true,
-//               moveOnMouseMove: true,
-//             },
-//           ]
-//         : [],
-//     series: [
-//       {
-//         name: 'CO₂ Emission',
-//         type: 'bar',
-//         data: chartData.map((d) => d.carbon_emission),
-//         barWidth: 20,
-//         itemStyle: {
-//           color: theme?.palette?.graph?.graph_area?.line || '#52b69a',
-//         },
-//       },
-//       {
-//         name: 'Power Consumption Ratio',
-//         type: 'bar',
-//         data: chartData.map((d) => d.pcr),
-//         barWidth: 20,
-//         itemStyle: {
-//           color: theme?.palette?.graph?.graph_area?.secondary_line || '#d62828',
-//         },
-//       },
-//     ],
-//   };
-
-//   return (
-//     <Row gutter={[16, 16]} style={{ padding: '10px' }}>
-//       <Col xs={24} lg={24}>
-//         <CustomCard
-//           style={{
-//             border: `1px solid ${theme?.palette?.default_card?.border}`,
-//             backgroundColor: theme?.palette?.main_layout?.background,
-//             borderRadius: '7px',
-//             color: theme?.palette?.main_layout?.primary_text,
-//           }}
-//         >
-//           <CustomSpin spinning={loading}>
-//             <div
-//               style={{
-//                 display: 'flex',
-//                 justifyContent: 'space-between',
-//                 width: '100%',
-//               }}
-//             >
-//               <p
-//                 style={{
-//                   fontSize: '16px',
-//                   color: theme?.palette?.main_layout?.primary_text,
-//                   marginBottom: '0px',
-//                   marginTop: '0px',
-//                   fontFamily: 'inter',
-//                 }}
-//               >
-//                 Device Level
-//               </p>
-//               <div className="buttons"> show compare</div>
-//             </div>
-//             <div style={{ position: 'relative' }}>
-//               <ReactECharts
-//                 option={option}
-//                 style={{ height: '350px' }}
-//                 onEvents={{ click: onClick }}
-//               />
-//             </div>
-//           </CustomSpin>
-//         </CustomCard>
-//       </Col>
-//     </Row>
-//   );
-// };
-// export default DeviceCo2PowerCompareChart;
-
 import React, { useState, useMemo, useEffect } from 'react';
 import ReactECharts from 'echarts-for-react';
 import { useTheme } from '@mui/material/styles';
@@ -379,29 +172,6 @@ const DeviceCo2PowerCompareChart = ({
           ]
         : [],
 
-    // series: [
-    //   (showCO2 || showBothByDefault) && {
-    //     name: 'CO₂ Emission',
-    //     type: 'bar',
-    //     data: chartData?.map((d) => d.carbon_emission_kg),
-    //     barWidth: 20,
-    //     itemStyle: {
-    //       // color: theme?.palette?.graph?.graph_area?.line || '#52b69a',
-    //       // color: '#52b69a',
-    //       color: '#14A166',
-    //     },
-    //   },
-    //   (showPCR || showBothByDefault) && {
-    //     name: 'Power Consumption Ratio',
-    //     type: 'bar',
-    //     data: chartData?.map((d) => d.pcr),
-    //     barWidth: 20,
-    //     itemStyle: {
-    //       // color: theme?.palette?.graph?.graph_area?.secondary_line || '#d62828',
-    //       color: '#2268D1',
-    //     },
-    //   },
-    // ].filter(Boolean),
     series: isCompareDone
       ? [
           (showCO2 || showBothByDefault) && {
@@ -409,28 +179,34 @@ const DeviceCo2PowerCompareChart = ({
             type: 'bar',
             data: comparedData?.map((d) => d.device1_co2),
             barWidth: 15,
-            itemStyle: { color: theme?.palette?.shades?.light_green },
+            itemStyle: {
+              color: theme?.palette?.shades?.orange,
+              // color: '#A72693',
+            },
           },
           (showCO2 || showBothByDefault) && {
             name: 'CO₂ Emission - Device 2',
             type: 'bar',
             data: comparedData?.map((d) => d.device2_co2),
             barWidth: 15,
-            itemStyle: { color: '#A1E3B8' },
+            itemStyle: { color: '#e0b770ff' },
           },
           (showPCR || showBothByDefault) && {
             name: 'Power Consumption Ratio - Device 1',
             type: 'bar',
             data: comparedData?.map((d) => d.device1_pcr),
             barWidth: 15,
-            itemStyle: { color: theme?.palette?.shades?.light_blue },
+            itemStyle: { color: theme?.palette?.shades?.purple },
           },
           (showPCR || showBothByDefault) && {
             name: 'Power Consumption Ratio - Device 2',
             type: 'bar',
             data: comparedData?.map((d) => d.device2_pcr),
             barWidth: 15,
-            itemStyle: { color: '#8AB6F1' },
+            itemStyle: {
+              // color: theme?.palette?.shades?.dark_purple,
+              color: '#8a6fc8ff',
+            },
           },
         ].filter(Boolean)
       : [
@@ -439,14 +215,20 @@ const DeviceCo2PowerCompareChart = ({
             type: 'bar',
             data: chartData?.map((d) => d.carbon_emission_kg),
             barWidth: 20,
-            itemStyle: { color: theme?.palette?.shades?.light_green },
+            itemStyle: {
+              color: theme?.palette?.shades?.orange,
+              // color: '#A72693',
+            },
           },
           (showPCR || showBothByDefault) && {
             name: 'Power Consumption Ratio',
             type: 'bar',
             data: chartData?.map((d) => d.pcr),
             barWidth: 20,
-            itemStyle: { color: theme?.palette?.shades?.light_blue },
+            itemStyle: {
+              color: theme?.palette?.shades?.purple,
+              // color: '#A72693',
+            },
           },
         ].filter(Boolean),
   };
