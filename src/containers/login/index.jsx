@@ -97,8 +97,10 @@ function Index() {
               navigate('/main_layout/control-panel/all-users');
             } else {
               // for old dashboard
-              dispatch(setSelectedModule('Dashboard'));
-              navigate('/main_layout/dashboard_module/dashboard');
+              dispatch(setSelectedModule('New Dashboard'));
+              navigate(
+                '/main_layout/updated_dashboard_module/updated_dashboard'
+              );
               // for new updated
               // dispatch(setSelectedModule('New Dashboard'));
               // navigate('/main_layout/new-dashboard');

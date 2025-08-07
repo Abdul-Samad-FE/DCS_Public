@@ -16,32 +16,7 @@ const menuItems = [
     id: 'devices',
     name: 'Devices',
     path: 'devices',
-    // children: [
-    //   {
-    //     id: "devices",
-    //     name: "Devices",
-    //     path: "/main_layout/uam_module/devices/devices",
-    //   },
-
-    //   {
-    //     id: "chassis",
-    //     name: "Chassis",
-    //     path: "/main_layout/uam_module/devices/chassis",
-    //   },
-    //   {
-    //     id: "module",
-    //     name: "Module",
-    //     path: "/main_layout/uam_module/devices/module",
-    //   },
-    //   {
-    //     id: "power",
-    //     name: "Power Supply",
-    //     path: "/main_layout/uam_module/devices/power",
-    //   },
-    //   { id: "fan", name: "Fan", path: "/main_layout/uam_module/devices/fan" },
-    // ],
   },
-  { id: 'inventory', name: 'Inventory', path: 'Inventory2' },
 ];
 
 function Index(props) {

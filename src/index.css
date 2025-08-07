@@ -353,6 +353,14 @@ code {
   font-size: 14px;
   color: red;
 }
+
+.blurred-content {
+  filter: blur(4px);
+  pointer-events: none;
+  user-select: none;
+  position: relative;
+}
+
 /* ========= tour style end ============= */
 @media screen and (max-width: 500px) {
   .inventory_detail_container {

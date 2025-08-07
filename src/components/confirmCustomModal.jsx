@@ -1,9 +1,9 @@
-import React from "react";
-import { Modal, Button } from "antd";
-import styled from "styled-components";
-import { ExclamationCircleFilled } from "@ant-design/icons";
-import { AiOutlineLogout } from "react-icons/ai";
-import { useTheme } from "@mui/material/styles";
+import React from 'react';
+import { Modal, Button } from 'antd';
+import styled from 'styled-components';
+import { ExclamationCircleFilled } from '@ant-design/icons';
+import { AiOutlineLogout } from 'react-icons/ai';
+import { useTheme } from '@mui/material/styles';
 
 const { confirm } = Modal;
 
@@ -44,24 +44,24 @@ const ConfirmCustomModal = () => {
   const showCustomModal = () => {
     confirm({
       title: (
-        <span style={{ color: "gray" }}>Are you sure you want to log out?</span>
+        <span style={{ color: 'gray' }}>Are you sure you want to log out?</span>
       ),
-      icon: <ExclamationCircleFilled style={{ color: "#ff4d4f" }} />,
+      icon: <ExclamationCircleFilled style={{ color: '#ff4d4f' }} />,
       content: (
-        <span style={{ color: "gray" }}>
+        <span style={{ color: 'gray' }}>
           Logging out will end your current session. Are you sure you want to
           proceed?
         </span>
       ),
-      okText: "Yes",
-      cancelText: "No",
-      okType: "primary",
+      okText: 'Yes',
+      cancelText: 'No',
+      okType: 'primary',
       onOk() {
         // Your logout logic here
-        console.log("Logged out");
+        console.log('Logged out');
       },
       onCancel() {
-        console.log("Cancel");
+        console.log('Cancel');
       },
     });
   };
@@ -70,16 +70,16 @@ const ConfirmCustomModal = () => {
       <div
         onClick={showCustomModal}
         style={{
-          color: "#a64629",
+          color: '#a64629',
           background: theme?.palette?.page_header?.icons_bg,
-          padding: "10px",
-          borderRadius: "100%",
-          width: "20px",
-          height: "20px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          cursor: "pointer",
+          padding: '10px',
+          borderRadius: '100%',
+          width: '20px',
+          height: '20px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          cursor: 'pointer',
           // marginRight: "15px",
         }}
       >

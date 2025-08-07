@@ -89,6 +89,7 @@ import {
   setSelectedModule,
 } from '../store/features/sidebarMenu/SidebarSlice';
 import { IoLogoCodepen } from 'react-icons/io5';
+import ConfirmLogoutModal from '../components/ConfirmLogoutModal';
 // import LoadingSpinne
 const uname = localStorage.getItem('user_name');
 const auth_token = localStorage.getItem('auth_token');
@@ -201,7 +202,17 @@ export default function Index() {
   const userRole = localStorage.getItem('user_role');
   console.log('userRole', userRole);
   console.log('Selected Module:::', selectedModule);
+  // logout modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const showConfirmModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  const handleLogout = () => {
+    logOut();
+    setIsModalOpen(false);
+  };
+  // logout modal end
   const handleClose = () => {
     setOpen2(false);
   };
@@ -362,9 +373,9 @@ export default function Index() {
         className: 'custom-ok-button',
       },
       cancelText: 'No',
-      onOk() {
-        logOut();
-      },
+      // onOk() {
+      //   logOut();
+      // },
       onCancel() {
         console.log('Cancel');
       },
@@ -486,7 +497,8 @@ export default function Index() {
     {
       label: (
         <div
-          onClick={showConfirm}
+          // onClick={showConfirm}
+          onClick={showConfirmModal}
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -614,43 +626,6 @@ export default function Index() {
   ];
 
   const drawerMenuItems = [
-    {
-      key: '/main_layout/dashboard_module/dashboard',
-      name: 'Dashboard',
-      inActiveIcon: (
-        <div
-          style={{
-            width: '100%',
-            borderRadius: '50px 0px 0px 50px',
-            padding: '10px 10px 8px 10px',
-            marginTop: '5px',
-            marginBottom: '5px',
-          }}
-        >
-          <RxDashboard style={{ fontSize: '23px', color: '#697588' }} />
-        </div>
-      ),
-      activeIcon: (
-        <div
-          style={{
-            background: theme?.palette?.main_layout?.sideBar?.icon_bg,
-            width: '100%',
-            borderRadius: '50px 0px 0px 50px',
-            padding: '10px 10px 8px 10px',
-            marginTop: '5px',
-            marginBottom: '5px',
-          }}
-        >
-          <RxDashboard
-            style={{
-              fontSize: '23px',
-              color: theme?.palette?.main_layout?.sideBar?.icon_color,
-            }}
-          />
-        </div>
-      ),
-      path: 'dashboard_module',
-    },
     {
       key: '/main_layout/updated_dashboard_module/updated_dashboard',
       name: 'New Dashboard',
@@ -1099,6 +1074,11 @@ export default function Index() {
   return (
     <>
       {contextHolder}
+      <ConfirmLogoutModal
+        isOpen={isModalOpen}
+        onCancel={closeModal}
+        onLogout={handleLogout}
+      />
       <CustomModal
         open={openModalScore}
         title="Datacenter Scorecard"

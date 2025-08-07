@@ -82,7 +82,7 @@ const router = createBrowserRouter([
               to={
                 loginData?.user_info?.user_role === 'superadmin'
                   ? 'control-panel'
-                  : 'dashboard'
+                  : 'updated-dashboard'
                 // : 'new-dashboard'
               }
               replace

@@ -94,11 +94,6 @@ const Index = () => {
       name: 'Devices',
       path: 'devices',
     },
-
-    { id: 'chassis', name: 'Chassis', path: 'chassis' },
-    { id: 'module', name: 'Module', path: 'module' },
-    { id: 'power', name: 'Power Supply', path: 'power' },
-    { id: 'fan', name: 'Fan', path: 'fan' },
   ];
 
   const onFinish = async (values) => {
