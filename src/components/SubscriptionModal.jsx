@@ -49,7 +49,8 @@ const SubscriptionModal = ({ open, onClose, theme, handleClick }) => {
     >
       <p style={{ color: theme?.palette?.default_table?.header_text }}>
         If you have questions about pricing or want to enable this module for
-        your account, click the button below to contact our support team.
+        your account, contact our support team at
+        <a href="mailto:support@extravis.co">support@extravis.co</a>.
       </p>
 
       <ButtonWrapper>
