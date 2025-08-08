@@ -78,14 +78,14 @@ const ButtonWrapper = styled.div`
   justify-content: flex-end;
 `;
 function PueModule() {
- 
   const theme = useTheme();
   const location = useLocation();
   const [modalOpen, setModalOpen] = useState(false);
   const [restricted, setRestricted] = useState(false);
 
   const handleClick = () => {
-    alert('Subscribed');
+    window.location.href = 'https://extravis.co/contact-us/';
+    // window.location.href = 'mailto:support@extravis.co';
   };
 
   useEffect(() => {

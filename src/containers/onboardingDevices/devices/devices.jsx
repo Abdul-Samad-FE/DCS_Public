@@ -53,6 +53,28 @@ import {
 import CustomSpin from '../../../components/CustomSpin.jsx';
 // import AddDeviceForm from "../../uamModule/inventory/addDeviceForm.jsx";
 
+const StyledModal = styled(Modal)`
+  .ant-modal-content {
+    background-color: ${({ theme }) =>
+      theme?.palette?.default_card?.background};
+    color: ${({ theme }) => theme?.palette?.main_layout?.primary_text};
+  }
+
+  .ant-modal-header {
+    background-color: ${({ theme }) =>
+      theme?.palette?.default_card?.background};
+    color: ${({ theme }) => theme?.palette?.main_layout?.primary_text};
+  }
+
+  .ant-modal-title {
+    color: ${({ theme }) => theme?.palette?.main_layout?.primary_text};
+  }
+
+  .ant-modal-body {
+    color: ${({ theme }) => theme?.palette?.main_layout?.primary_text};
+  }
+`;
+
 const Devices = () => {
   // theme
   const theme = useTheme();
@@ -72,6 +94,7 @@ const Devices = () => {
   const [recordToEdit, setRecordToEdit] = useState(null);
   const [openSeedModal, setOpenSeedModal] = useState(false);
 
+  const [isLimitModalVisible, setIsLimitModalVisible] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [open3, setOpen3] = useState(false);
   const [openUpload, setOpenUpload] = useState(false);
@@ -221,62 +244,66 @@ const Devices = () => {
 
   // Old
   const onBoard = async (id) => {
-    if (selectedRowKeys?.length > 0 || id) {
-      setLoading(true);
-      const deviceId = [id];
-      const payload = {
-        device_ids: selectedRowKeys?.length > 0 ? selectedRowKeys : deviceId,
-      };
+    if (onboardedDevicesCount > 50) {
+      setIsLimitModalVisible(true);
+    } else {
+      if (selectedRowKeys?.length > 0 || id) {
+        setLoading(true);
+        const deviceId = [id];
+        const payload = {
+          device_ids: selectedRowKeys?.length > 0 ? selectedRowKeys : deviceId,
+        };
 
-      try {
-        dispatch(
-          showNotification({
-            type: 'success',
-            message: 'Devices onboarding started!',
-          })
-        );
-
-        setLoading(false);
-
-        const res = await axios.post(
-          baseUrl + '/sites/sites/onboard_devices',
-          payload,
-          {
-            headers: {
-              Authorization: `Bearer ${access_token}`,
-            },
-          }
-        );
-        setLoading(false);
-
-        console.log('res:::', res);
-
-        if (res.status === 200) {
+        try {
           dispatch(
-            showNotification({ type: 'success', message: res.data.message })
+            showNotification({
+              type: 'success',
+              message: 'Devices onboarding started!',
+            })
           );
-          setSelectedRowKeys([]);
-          fetchSeeds();
-        } else {
-          console.log('error response.......', res);
+
+          setLoading(false);
+
+          const res = await axios.post(
+            baseUrl + '/sites/sites/onboard_devices',
+            payload,
+            {
+              headers: {
+                Authorization: `Bearer ${access_token}`,
+              },
+            }
+          );
+          setLoading(false);
+
+          console.log('res:::', res);
+
+          if (res.status === 200) {
+            dispatch(
+              showNotification({ type: 'success', message: res.data.message })
+            );
+            setSelectedRowKeys([]);
+            fetchSeeds();
+          } else {
+            console.log('error response.......', res);
+          }
+        } catch (error) {
+          setLoading(false);
+          console.log('error.......', error);
+          dispatch(
+            showNotification({
+              type: 'error',
+              message: 'Onboarding failed. Please try again.',
+            })
+          );
         }
-      } catch (error) {
-        setLoading(false);
-        console.log('error.......', error);
+      } else {
         dispatch(
           showNotification({
             type: 'error',
-            message: 'Onboarding failed. Please try again.',
+            message: 'Please select at least one device!',
           })
         );
       }
-    } else {
-      dispatch(
-        showNotification({
-          type: 'error',
-          message: 'Please select at least one device!',
-        })
-      );
     }
   };
 
@@ -632,9 +659,54 @@ const Devices = () => {
       setFilteredData(inventoryPageData);
     }
   };
+
+  const onboardedDevicesCount = inventoryPageData.filter(
+    (device) => device.OnBoardingStatus === true
+  ).length;
+  console.log('onboardedDevicesCount::', onboardedDevicesCount);
+
   return (
     <div>
       {contextHolder}
+      <StyledModal
+        title="Limit Exceeded"
+        open={isLimitModalVisible}
+        // onOk={() => {
+        //   setSelectedRowKeys([]);
+        //   setIsLimitModalVisible(false);
+        // }}
+        onCancel={() => setIsLimitModalVisible(false)}
+        centered
+        theme={theme}
+        footer={null}
+      >
+        <p>Devices limit exceeded. You can only onboard up to 50 devices.</p>
+        <div
+          style={{
+            marginTop: 16,
+            display: 'flex',
+            gap: '6px',
+            justifyContent: 'flex-end',
+          }}
+        >
+          <Button
+            danger
+            type="primary"
+            onClick={() => setIsLimitModalVisible(false)}
+          >
+            Close
+          </Button>
+          <Button
+            type="primary"
+            onClick={() => {
+              setSelectedRowKeys([]);
+              setIsLimitModalVisible(false);
+            }}
+          >
+            OK
+          </Button>
+        </div>
+      </StyledModal>
       {/* {openSeedModal ? (
         <CustomModalSeeds
           handleClose={handleClose}
