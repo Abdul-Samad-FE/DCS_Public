@@ -108,6 +108,8 @@ const Devices = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [revert, setRevert] = useState(false);
   const [loadingFile, setLoadingFile] = useState(false);
+  const [onboardedDevicesCount, setOnboardedDevicesCount] = useState(0);
+
   console.log('selectedRowKeys:', selectedRowKeys);
   const access_token = localStorage.getItem('access_token');
 
@@ -660,10 +662,20 @@ const Devices = () => {
     }
   };
 
-  const onboardedDevicesCount = inventoryPageData.filter(
-    (device) => device.OnBoardingStatus === true
-  ).length;
-  console.log('onboardedDevicesCount::', onboardedDevicesCount);
+  // const onboardedDevicesCount = inventoryPageData.filter(
+  //   (device) => device.OnBoardingStatus === true
+  // ).length;
+  // console.log('onboardedDevicesCount::', onboardedDevicesCount);
+
+  useEffect(() => {
+    if (inventoryPageData && Array.isArray(inventoryPageData)) {
+      const count = inventoryPageData.filter(
+        (device) => device.OnBoardingStatus === true
+      ).length;
+      setOnboardedDevicesCount(count);
+      console.log('onboardedDevicesCount::', count);
+    }
+  }, [inventoryPageData]);
 
   return (
     <div>
